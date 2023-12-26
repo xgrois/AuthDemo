@@ -1,5 +1,5 @@
 using AuthDemo.Data;
-using Microsoft.AspNetCore.Identity;
+using AuthDemo.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("AppDbContextCo
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddIdentity<User, Role>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 

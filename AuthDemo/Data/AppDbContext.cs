@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AuthDemo.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthDemo.Data;
 
-public class AppDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : IdentityDbContext<User, Role, int>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
