@@ -1,5 +1,5 @@
 ﻿@page
-@model AuthDemo.Pages.Users.IndexModel
+@model AuthDemo.Pages.Usuarios.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -15,19 +15,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].UserName)
+                @Html.DisplayNameFor(model => model.Usuarios[0].UserName)
             </th>
 @*             <th>
                 @Html.DisplayNameFor(model => model.User[0].NormalizedUserName)
             </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Email)
+                @Html.DisplayNameFor(model => model.Usuarios[0].Email)
             </th>
 @*             <th>
                 @Html.DisplayNameFor(model => model.User[0].NormalizedEmail)
             </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.User[0].EmailConfirmed)
+                @Html.DisplayNameFor(model => model.Usuarios[0].EmailConfirmed)
             </th>
 @*             <th>
                 @Html.DisplayNameFor(model => model.User[0].PasswordHash)
@@ -39,28 +39,29 @@
                 @Html.DisplayNameFor(model => model.User[0].ConcurrencyStamp)
             </th> *@
             <th>
-                @Html.DisplayNameFor(model => model.User[0].PhoneNumber)
+                @Html.DisplayNameFor(model => model.Usuarios[0].PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].PhoneNumberConfirmed)
+                @Html.DisplayNameFor(model => model.Usuarios[0].PhoneNumberConfirmed)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].TwoFactorEnabled)
+                @Html.DisplayNameFor(model => model.Usuarios[0].TwoFactorEnabled)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].LockoutEnd)
+                @Html.DisplayNameFor(model => model.Usuarios[0].LockoutEnd)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].LockoutEnabled)
+                @Html.DisplayNameFor(model => model.Usuarios[0].LockoutEnabled)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].AccessFailedCount)
+                @Html.DisplayNameFor(model => model.Usuarios[0].AccessFailedCount)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.User) {
+        @foreach (var item in Model.Usuarios)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)

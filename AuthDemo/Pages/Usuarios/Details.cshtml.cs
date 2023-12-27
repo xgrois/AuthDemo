@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AuthDemo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using AuthDemo.Data;
-using AuthDemo.Models;
 
-namespace AuthDemo.Pages.Users
+namespace AuthDemo.Pages.Usuarios
 {
     public class DetailsModel : PageModel
     {

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using AuthDemo.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using AuthDemo.Data;
-using AuthDemo.Models;
 
-namespace AuthDemo.Pages.Users
+namespace AuthDemo.Pages.Usuarios
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +13,11 @@ namespace AuthDemo.Pages.Users
             _context = context;
         }
 
-        public IList<Usuario> User { get;set; } = default!;
+        public IList<Usuario> Usuarios { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            User = await _context.Users.ToListAsync();
+            Usuarios = await _context.Users.ToListAsync();
         }
     }
 }

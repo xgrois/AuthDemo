@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AuthDemo.Pages.Users
+namespace AuthDemo.Pages.Usuarios
 {
     public class DeleteModel : PageModel
     {

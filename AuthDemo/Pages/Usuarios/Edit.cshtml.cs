@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthDemo.Pages.Users
+namespace AuthDemo.Pages.Usuarios
 {
     public class EditModel : PageModel
     {
