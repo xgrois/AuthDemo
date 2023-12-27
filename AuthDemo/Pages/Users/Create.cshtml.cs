@@ -9,17 +9,17 @@ namespace AuthDemo.Pages.Users
 {
     public class CreateModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IUserStore<User> _userStore;
-        private readonly IUserEmailStore<User> _emailStore;
+        private readonly SignInManager<Usuario> _signInManager;
+        private readonly UserManager<Usuario> _userManager;
+        private readonly IUserStore<Usuario> _userStore;
+        private readonly IUserEmailStore<Usuario> _emailStore;
         private readonly ILogger<CreateModel> _logger;
         //private readonly IEmailSender _emailSender;
 
         public CreateModel(
-            UserManager<User> userManager,
-            IUserStore<User> userStore,
-            SignInManager<User> signInManager,
+            UserManager<Usuario> userManager,
+            IUserStore<Usuario> userStore,
+            SignInManager<Usuario> signInManager,
             ILogger<CreateModel> logger
             //IEmailSender emailSender
             )
@@ -88,7 +88,7 @@ namespace AuthDemo.Pages.Users
         }
 
         [BindProperty]
-        public User User { get; set; } = default!;
+        public Usuario User { get; set; } = default!;
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -141,11 +141,11 @@ namespace AuthDemo.Pages.Users
             return Page();
         }
 
-        private User CreateUser()
+        private Usuario CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                return Activator.CreateInstance<Usuario>();
             }
             catch
             {
@@ -155,13 +155,13 @@ namespace AuthDemo.Pages.Users
             }
         }
 
-        private IUserEmailStore<User> GetEmailStore()
+        private IUserEmailStore<Usuario> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<User>)_userStore;
+            return (IUserEmailStore<Usuario>)_userStore;
         }
     }
 }

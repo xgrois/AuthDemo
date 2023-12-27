@@ -19,7 +19,7 @@ namespace AuthDemo.Pages.Users
             _context = context;
         }
 
-        public IList<User> User { get;set; } = default!;
+        public IList<Usuario> User { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

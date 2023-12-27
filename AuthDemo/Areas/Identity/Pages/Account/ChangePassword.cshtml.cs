@@ -12,17 +12,17 @@ namespace AuthDemo.Areas.Identity.Pages.Account
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IUserStore<User> _userStore;
-        private readonly IUserEmailStore<User> _emailStore;
+        private readonly SignInManager<Usuario> _signInManager;
+        private readonly UserManager<Usuario> _userManager;
+        private readonly IUserStore<Usuario> _userStore;
+        private readonly IUserEmailStore<Usuario> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
 
         public ChangePasswordModel(
-            UserManager<User> userManager,
-            IUserStore<User> userStore,
-            SignInManager<User> signInManager,
+            UserManager<Usuario> userManager,
+            IUserStore<Usuario> userStore,
+            SignInManager<Usuario> signInManager,
             ILogger<RegisterModel> logger
             //IEmailSender emailSender
             )
@@ -73,7 +73,7 @@ namespace AuthDemo.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public User Usuario { get; set; } = default!;
+        public Usuario Usuario { get; set; } = default!;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -146,11 +146,11 @@ namespace AuthDemo.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private User CreateUser()
+        private Usuario CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                return Activator.CreateInstance<Usuario>();
             }
             catch
             {
@@ -160,13 +160,13 @@ namespace AuthDemo.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<User> GetEmailStore()
+        private IUserEmailStore<Usuario> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<User>)_userStore;
+            return (IUserEmailStore<Usuario>)_userStore;
         }
     }
 }

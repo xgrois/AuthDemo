@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthDemo.Data;
 
-public class AppDbContext : IdentityDbContext<User, Role, int>
+public class AppDbContext : IdentityDbContext<Usuario, Rol, int>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)

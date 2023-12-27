@@ -14,12 +14,12 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.UserName)
+            @Html.DisplayNameFor(model => model.Usuario.UserName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.UserName)
+            @Html.DisplayFor(model => model.Usuario.UserName)
         </dd>
-        <dt class="col-sm-2">
+@*         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.User.NormalizedUserName)
         </dt>
         <dd class="col-sm-10">
@@ -96,11 +96,11 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.User.AccessFailedCount)
-        </dd>
+        </dd> *@
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="User.Id" />
+        <input type="hidden" asp-for="Usuario.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

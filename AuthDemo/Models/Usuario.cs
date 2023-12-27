@@ -2,7 +2,7 @@
 
 namespace AuthDemo.Models
 {
-    public class User : IdentityUser<int>
+    public class Usuario : IdentityUser<int>
     {
     }
 }

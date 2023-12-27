@@ -2,7 +2,7 @@
 
 namespace AuthDemo.Models
 {
-    public class Role : IdentityRole<int>
+    public class Rol : IdentityRole<int>
     {
     }
 }

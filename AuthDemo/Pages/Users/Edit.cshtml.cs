@@ -9,17 +9,17 @@ namespace AuthDemo.Pages.Users
 {
     public class EditModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IUserStore<User> _userStore;
+        private readonly SignInManager<Usuario> _signInManager;
+        private readonly UserManager<Usuario> _userManager;
+        private readonly IUserStore<Usuario> _userStore;
         //private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<EditModel> _logger;
         //private readonly IEmailSender _emailSender;
 
         public EditModel(
-            UserManager<User> userManager,
-            IUserStore<User> userStore,
-            SignInManager<User> signInManager,
+            UserManager<Usuario> userManager,
+            IUserStore<Usuario> userStore,
+            SignInManager<Usuario> signInManager,
             ILogger<EditModel> logger
             //IEmailSender emailSender
             )
@@ -72,7 +72,7 @@ namespace AuthDemo.Pages.Users
         }
 
         [BindProperty]
-        public User Usuario { get; set; } = default!;
+        public Usuario Usuario { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
