@@ -1,30 +1,26 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using AuthDemo.Models;
+﻿using AuthDemo.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthDemo.Areas.Identity.Pages.Account
+namespace AuthDemo.Pages.Users
 {
-    public class RegisterModel : PageModel
+    public class CreateModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
-        private readonly ILogger<RegisterModel> _logger;
+        private readonly ILogger<CreateModel> _logger;
         //private readonly IEmailSender _emailSender;
 
-        public RegisterModel(
+        public CreateModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger
+            ILogger<CreateModel> logger
             //IEmailSender emailSender
             )
         {
@@ -85,16 +81,18 @@ namespace AuthDemo.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        [BindProperty]
+        public User User { get; set; } = default!;
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl = "./Index"; // ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
@@ -130,8 +128,8 @@ namespace AuthDemo.Areas.Identity.Pages.Account
                     //    return LocalRedirect(returnUrl);
                     //}
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToPage(returnUrl);//return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {
