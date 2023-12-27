@@ -12,6 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <a asp-area="Identity" asp-page="/Account/ChangePassword" asp-route-returnUrl="/Users/Edit?id=@Model.Usuario.Id" asp-route-id="@Model.Usuario.Id">Change password</a>
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Usuario.Id" />
