@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthDemo.Pages.Usuarios
@@ -11,6 +12,7 @@ namespace AuthDemo.Pages.Usuarios
     {
         private readonly SignInManager<Usuario> _signInManager;
         private readonly UserManager<Usuario> _userManager;
+        private readonly RoleManager<Rol> _roleManager;
         private readonly IUserStore<Usuario> _userStore;
         //private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<EditModel> _logger;
@@ -18,6 +20,7 @@ namespace AuthDemo.Pages.Usuarios
 
         public EditModel(
             UserManager<Usuario> userManager,
+            RoleManager<Rol> roleManager,
             IUserStore<Usuario> userStore,
             SignInManager<Usuario> signInManager,
             ILogger<EditModel> logger
@@ -25,6 +28,7 @@ namespace AuthDemo.Pages.Usuarios
             )
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             //_emailStore = GetEmailStore();
             _signInManager = signInManager;
@@ -71,8 +75,19 @@ namespace AuthDemo.Pages.Usuarios
             public string? PhoneNumber { get; set; }
         }
 
+        public class UsuarioRol
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public bool Checked { get; set; } = false;
+
+        }
+
         [BindProperty]
-        public Usuario Usuario { get; set; } = default!;
+        public List<UsuarioRol> UsuarioRoles { get; set; } = new List<UsuarioRol>();
+
+        [BindProperty]
+        public Usuario Usuario { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -94,7 +109,32 @@ namespace AuthDemo.Pages.Usuarios
                 PhoneNumber = usuario.PhoneNumber
             };
 
+            var roles = await _roleManager.Roles.ToListAsync();
+
+            foreach (var rol in roles)
+            {
+                UsuarioRoles.Add(new UsuarioRol() { Id = rol.Id, Name = rol.Name, Checked = false });
+            }
+
+            var usuarioRoles = await _userManager.GetRolesAsync(usuario);
+
+            foreach (var rol in usuarioRoles)
+            {
+                CheckRol(rol);
+            }
+
             return Page();
+        }
+
+        private void CheckRol(string rolUsuario)
+        {
+            foreach (var rolDB in UsuarioRoles)
+            {
+                if (rolDB.Name.Equals(rolUsuario))
+                {
+                    rolDB.Checked = true;
+                }
+            }
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -139,6 +179,30 @@ namespace AuthDemo.Pages.Usuarios
                 }
             }
 
+            if (UsuarioRoles != null)
+            {
+                foreach (var rol in UsuarioRoles)
+                {
+
+                    if (rol.Checked)
+                    {
+                        if (!await _userManager.IsInRoleAsync(usuario, rol.Name))
+                        {
+                            await _userManager.AddToRoleAsync(usuario, rol.Name);
+                        }
+                    }
+                    else
+                    {
+                        if (await _userManager.IsInRoleAsync(usuario, rol.Name))
+                        {
+                            await _userManager.RemoveFromRoleAsync(usuario, rol.Name);
+                        }
+                    }
+
+                }
+            }
+
+
             //_context.Attach(User).State = EntityState.Modified;
 
             //try
@@ -158,7 +222,9 @@ namespace AuthDemo.Pages.Usuarios
             //}
 
             // All OK
-            return RedirectToPage("./Index");
+            //return RedirectToPage("./Index");
+            var myAddress = Request.Path.Value + Request.QueryString.Value;
+            return new LocalRedirectResult(myAddress);
         }
 
         //private bool UserExists(int id)

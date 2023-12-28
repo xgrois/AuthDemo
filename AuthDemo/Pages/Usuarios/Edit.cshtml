@@ -14,8 +14,11 @@
     <div class="col-md-4">
         <a asp-area="Identity" asp-page="/Account/ChangePassword" asp-route-returnUrl="/Usuarios/Edit?id=@Model.Usuario.Id" asp-route-id="@Model.Usuario.Id">Change password</a>
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Usuario.Id" />
+            <input type="hidden" asp-for="Usuario.UserName" />
+            <input type="hidden" asp-for="Usuario.Email" />
+            <input type="hidden" asp-for="Usuario.PhoneNumber" />
             <div class="form-floating mb-3">
                 <input asp-for="Usuario.UserName" class="form-control" disabled />
                 <label asp-for="Usuario.UserName">Username</label>
@@ -111,6 +114,49 @@
                 <input asp-for="User.AccessFailedCount" class="form-control" disabled />
                 <span asp-validation-for="User.AccessFailedCount" class="text-danger"></span>
             </div> *@
+            <div>
+                <h5>User Roles</h5>
+                <hr />
+                <div>
+@*                     @foreach (var item in Model.UsuarioRoles)
+                    {
+                        <input type="hidden" name="UsuarioRoles.Index" value="@item.Id" />
+                        <input type="hidden" name="UsuarioRoles[@item.Id].Id" value="@item.Id" />
+                        <input type="hidden" name="UsuarioRoles[@item.Id].Name" value="@item.Name" />
+                        <input type="hidden" name="UsuarioRoles[@item.Id].Checked" value="@item.Checked" />
+
+                        <input name="UsuarioRoles[@item.Id].Checked" type="checkbox" value="@item.Checked" /> @item.Name
+
+                        <br />
+                    } *@
+                    @for (int i = 0; i < Model.UsuarioRoles.Count(); i++)
+                    {
+                        <div class="form-group">
+@*                             <input type="hidden" asp-for="UsuarioRoles[i].Id" />
+                            <input type="hidden" asp-for="UsuarioRoles[i].Name" />
+                            <input type="hidden" asp-for="UsuarioRoles[i].Checked" />
+
+
+                            <input asp-for="UsuarioRoles[i].Checked" />
+                            <label asp-for="UsuarioRoles[i].Checked" class="form-check-label">@Model.UsuarioRoles[i].Name</label> *@
+                            @Html.CheckBoxFor(x => Model.UsuarioRoles[i].Checked,
+                                     new
+                                     {
+                                         @id = @Model.UsuarioRoles[i].Id,
+                                         @class = "form-check-input",
+                                         aria_checked = @Model.UsuarioRoles[i].Checked.ToString().ToLower(),
+                                         aria_label = @Model.UsuarioRoles[i].Name,
+                                     })
+                            <input type="hidden" asp-for="@Model.UsuarioRoles[i].Name" />
+                            <label class="form-check-label"
+                                   for="@Model.UsuarioRoles[i].Id" aria-labelby="@Model.UsuarioRoles[i].Id">
+                                @Model.UsuarioRoles[i].Name
+                            </label>
+
+                        </div>                        
+                    }
+                </div>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -121,6 +167,46 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+            $checkboxHelper.initialize(document.getElementsByClassName("form-check-input"));
+        });
+
+    var $checkboxHelper = $checkboxHelper || {};
+    $checkboxHelper = function () {
+        var setupCheckboxesClickEvents = function (checkboxes) {
+
+            for (let index = 0; index < checkboxes.length; index++) {
+
+                checkboxes[index].onclick = function () {
+
+                    if (checkboxes[index].getAttribute('aria-checked') === 'true') {
+                        checkboxes[index].setAttribute('aria-checked', 'false');
+                    } else {
+                        checkboxes[index].setAttribute('aria-checked', 'true');
+                    }
+                };
+            }
+        }
+
+        // for testing
+        var setCheckboxesAriaChecked = function (checkboxes) {
+
+            for (let index = 0; index < checkboxes.length; index++) {
+                checkboxes[index].onclick = function () {
+                    checkboxes[index].setAttribute('aria-checked', 'false');
+                };
+            }
+        }
+
+
+        return {
+            initialize: setupCheckboxesClickEvents,
+            setAriaCheckedFalse: setCheckboxesAriaChecked
+        };
+    }();
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
