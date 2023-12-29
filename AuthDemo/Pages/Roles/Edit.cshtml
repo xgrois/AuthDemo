@@ -30,6 +30,55 @@
                 <input asp-for="Rol.ConcurrencyStamp" class="form-control" disabled />
                 <span asp-validation-for="Rol.ConcurrencyStamp" class="text-danger"></span>
             </div> *@
+
+            <div>
+                <h5>Permisos asignados</h5>
+                <hr />
+                <div>
+                    @*                     @foreach (var item in Model.UsuarioRoles)
+                    {
+                    <input type="hidden" name="UsuarioRoles.Index" value="@item.Id" />
+                    <input type="hidden" name="UsuarioRoles[@item.Id].Id" value="@item.Id" />
+                    <input type="hidden" name="UsuarioRoles[@item.Id].Name" value="@item.Name" />
+                    <input type="hidden" name="UsuarioRoles[@item.Id].Checked" value="@item.Checked" />
+
+                    <input name="UsuarioRoles[@item.Id].Checked" type="checkbox" value="@item.Checked" /> @item.Name
+
+                    <br />
+                    } *@
+                    @for (int i = 0; i < Model.RolPermisosCheckboxes.Count(); i++)
+                    {
+                        <div class="form-group">
+                            @*                             <input type="hidden" asp-for="UsuarioRoles[i].Id" />
+                        <input type="hidden" asp-for="UsuarioRoles[i].Name" />
+                        <input type="hidden" asp-for="UsuarioRoles[i].Checked" />
+
+
+                        <input asp-for="UsuarioRoles[i].Checked" />
+                        <label asp-for="UsuarioRoles[i].Checked" class="form-check-label">@Model.UsuarioRoles[i].Name</label> *@
+                            @Html.CheckBoxFor(x => Model.RolPermisosCheckboxes[i].Checked,
+                                     new
+                                     {
+                                         @id = @Model.RolPermisosCheckboxes[i].Permiso,
+                                         @class = "form-check-input",
+                                         aria_checked = @Model.RolPermisosCheckboxes[i].Checked.ToString().ToLower(),
+                                         aria_label = @Model.RolPermisosCheckboxes[i].Permiso,
+                                     })
+                            <input type="hidden" asp-for="@Model.RolPermisosCheckboxes[i].Permiso" />
+                            <label class="form-check-label"
+                                   for="@Model.RolPermisosCheckboxes[i].Permiso" aria-labelby="@Model.RolPermisosCheckboxes[i].Permiso">
+                                @Model.RolPermisosCheckboxes[i].Permiso
+                            </label>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+@*             @foreach (var per in Model.Permisos)
+            {
+                <p>@per</p>
+            } *@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -40,6 +89,46 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        $checkboxHelper.initialize(document.getElementsByClassName("form-check-input"));
+    });
+
+    var $checkboxHelper = $checkboxHelper || {};
+    $checkboxHelper = function () {
+        var setupCheckboxesClickEvents = function (checkboxes) {
+
+            for (let index = 0; index < checkboxes.length; index++) {
+
+                checkboxes[index].onclick = function () {
+
+                    if (checkboxes[index].getAttribute('aria-checked') === 'true') {
+                        checkboxes[index].setAttribute('aria-checked', 'false');
+                    } else {
+                        checkboxes[index].setAttribute('aria-checked', 'true');
+                    }
+                };
+            }
+        }
+
+        // for testing
+        var setCheckboxesAriaChecked = function (checkboxes) {
+
+            for (let index = 0; index < checkboxes.length; index++) {
+                checkboxes[index].onclick = function () {
+                    checkboxes[index].setAttribute('aria-checked', 'false');
+                };
+            }
+        }
+
+
+        return {
+            initialize: setupCheckboxesClickEvents,
+            setAriaCheckedFalse: setCheckboxesAriaChecked
+        };
+    }();
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

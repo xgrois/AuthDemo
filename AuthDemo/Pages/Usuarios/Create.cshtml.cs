@@ -1,4 +1,5 @@
-﻿using AuthDemo.Models;
+﻿using AuthDemo.Authorization;
+using AuthDemo.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AuthDemo.Pages.Usuarios
 {
+    [Authorize(enuPermissions.ManageUsers)]
     public class CreateModel : PageModel
     {
         private readonly SignInManager<Usuario> _signInManager;

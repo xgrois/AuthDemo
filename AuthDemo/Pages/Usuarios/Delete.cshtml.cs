@@ -1,10 +1,12 @@
-﻿using AuthDemo.Models;
+﻿using AuthDemo.Authorization;
+using AuthDemo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AuthDemo.Pages.Usuarios
 {
+    [Authorize(enuPermissions.ManageUsers)]
     public class DeleteModel : PageModel
     {
         private readonly SignInManager<Usuario> _signInManager;

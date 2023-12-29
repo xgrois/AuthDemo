@@ -2,16 +2,13 @@
 {
     public static class Permissions
     {
-        public static class PrivacyPage
+        public static class Usuarios
         {
-            public const string View = "Permissions.PrivacyPage.View";
-        }
-        public static class UsersPage
-        {
-            public const string View = "Permissions.UsersPage.View";
-            public const string Create = "Permissions.UsersPage.Create";
-            public const string Edit = "Permissions.UsersPage.Edit";
-            public const string Delete = "Permissions.UsersPage.Delete";
+            public const string All = "Permissions.Usuarios.All";
+            public const string Create = "Permissions.Usuarios.Create";
+            public const string Read = "Permissions.Usuarios.Read";
+            public const string Update = "Permissions.Usuarios.Update";
+            public const string Delete = "Permissions.Usuarios.Delete";
         }
     }
 }

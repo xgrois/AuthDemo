@@ -1,7 +1,7 @@
-﻿namespace AuthDemo.AccessControl
+﻿namespace AuthDemo.Authorization
 {
     public class CustomClaimTypes
     {
-        public const string Permission = "permission";
+        public const string Permissions = "permissions";
     }
 }
