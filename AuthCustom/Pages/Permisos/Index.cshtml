@@ -1,0 +1,70 @@
+﻿@page
+@model AuthCustom.Pages.Permisos.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<p>
+    Los permisos se deben crear en BD y aquí simplemente mostrarse. Si existe un permiso en BD también debe existir en código, en un enumerable con todos los permisos existentes en BD.
+</p>
+<p>
+    Cuando se añada una nueva página que necesite permisos, se crea en BD el permiso/s y se añade al enumerable de permisos el nuevo permiso/s.
+</p>
+<p>
+    Finalmente, en la nueva página se añade el atributo/s con el permiso/s que queramos:
+</p>
+<p>
+    [MyAuthorize(Permisos = new[] { AuthCustom.Authorization.Definitions.Permisos.Pages.All, AuthCustom.Authorization.Definitions.Permisos.MiNuevaPage.All, AuthCustom.Authorization.Definitions.Permisos.MiNuevaPage.Read })]
+</p>
+<p>
+    En el ejemplo estamos indicando que cualquier usuario con un rol que tenga alguno de esos permisos podrá acceder a la página.
+</p>
+<p>
+    Si se desea ocultar en HTML (p.e. en el NavBar) en un fichero .cshtml
+</p>
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Ejemplo</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">
+    if
+    (
+    (await _authorizationService.AuthorizeAsync(User, CustomAuthorizeTags.Permisos + "$" + string.Join("|", Permisos.Pages.All, Permisos.UsuariosPage.All, Permisos.UsuariosPage.Create, Permisos.UsuariosPage.Read, Permisos.UsuariosPage.Update, Permisos.UsuariosPage.Delete) + ";")).Succeeded
+    )
+    {
+        Aquí va el HTML
+    }
+    </textarea>
+</div>
+<p>
+    NOTA: el rol Admin aunque no tenga permisos configurados, podrá acceder a cualquier cosa.
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Permiso[0].Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Permiso) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.IdPermisos">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.IdPermisos">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.IdPermisos">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

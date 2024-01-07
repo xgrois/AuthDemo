@@ -1,0 +1,79 @@
+﻿@page
+@model AuthCustom.Pages.Roles.CreateModel
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<h1>Crear</h1>
+
+<h4>Rol</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Nombre" class="form-control" autocomplete="rolename" aria-required="true" placeholder="Nombre del rol, p.e.: Manager" />
+                <label asp-for="Input.Nombre"></label>
+                <span asp-validation-for="Input.Nombre" class="text-danger"></span>
+            </div>
+            <br />
+            <h5>Permisos</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Input.PermisosVM[0].IdPermisos)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Input.PermisosVM[0].Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Input.PermisosVM[0].Asignado)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Input.PermisosVM.Count(); i++)
+                    {
+                        <tr>
+                            @Html.HiddenFor(item => @Model.Input.PermisosVM[i].IdPermisos)
+                            @Html.HiddenFor(item => @Model.Input.PermisosVM[i].Nombre)
+                            <td>@Model.Input.PermisosVM[i].IdPermisos</td>
+                            <td>@Model.Input.PermisosVM[i].Nombre</td>
+                            <td>
+                                @Html.CheckBoxFor(x => Model.Input.PermisosVM[i].Asignado,
+                                         new
+                                         {
+                                             @id = @Model.Input.PermisosVM[i].IdPermisos,
+                                             @class = "form-check-input",
+                                             aria_checked = @Model.Input.PermisosVM[i].Asignado.ToString().ToLower(),
+                                             aria_label = @Model.Input.PermisosVM[i].Nombre,
+                                         })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-page="Index">Volver a roles</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @{
+        await Html.RenderPartialAsync("_CheckBoxesScriptsPartial");
+    }
+}

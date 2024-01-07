@@ -1,0 +1,40 @@
+﻿@page
+@model AuthCustom.Pages.Roles.IndexModel
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-page="Create">Crear nuevo rol</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.RolesVM[0].Nombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Input.RolesVM != null)
+        {
+            @foreach (var item in Model.Input.RolesVM)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.IdRoles">Editar</a> |
+                        <a asp-page="./Details" asp-route-id="@item.IdRoles">Detalles</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.IdRoles">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

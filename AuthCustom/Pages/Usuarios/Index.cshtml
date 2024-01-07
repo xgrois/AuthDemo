@@ -1,0 +1,60 @@
+﻿@page
+@model AuthCustom.Pages.Usuarios.IndexModel
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h1>Usuarios</h1>
+
+@* @if (
+   (await _authorizationService.AuthorizeAsync(User, Permissions.Application.All)).Succeeded ||
+   (await _authorizationService.AuthorizeAsync(User, Permissions.Usuarios.Create)).Succeeded
+)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+} *@
+
+<p>
+    <a asp-page="Create">Crear nuevo usuario</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.UsuariosVM[0].IdUsuarios)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.UsuariosVM[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.UsuariosVM[0].HashedPassword)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Input.UsuariosVM)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUsuarios)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HashedPassword)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.IdUsuarios">Editar</a> |
+                    <a asp-page="./Details" asp-route-id="@item.IdUsuarios">Detalles</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.IdUsuarios">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

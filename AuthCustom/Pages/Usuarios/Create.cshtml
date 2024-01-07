@@ -1,0 +1,89 @@
+﻿@page
+@model AuthCustom.Pages.Usuarios.CreateModel
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<h1>Crear</h1>
+
+<h4>Usuario</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="Your username, p.e.: adam77" />
+                <label asp-for="Input.UserName"></label>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <br />
+            <h5>Roles</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Input.RolesVM[0].IdRoles)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Input.RolesVM[0].Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Input.RolesVM[0].Asignado)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Input.RolesVM.Count(); i++)
+                    {
+                        <tr>
+                            @Html.HiddenFor(item => @Model.Input.RolesVM[i].IdRoles)
+                            @Html.HiddenFor(item => @Model.Input.RolesVM[i].Nombre)
+                            <td>@Model.Input.RolesVM[i].IdRoles</td>
+                            <td>@Model.Input.RolesVM[i].Nombre</td>
+                            <td>
+                                @Html.CheckBoxFor(x => Model.Input.RolesVM[i].Asignado,
+                                         new
+                                         {
+                                             @id = @Model.Input.RolesVM[i].IdRoles,
+                                             @class = "form-check-input",
+                                             aria_checked = @Model.Input.RolesVM[i].Asignado.ToString().ToLower(),
+                                             aria_label = @Model.Input.RolesVM[i].Nombre,
+                                         })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @{
+        await Html.RenderPartialAsync("_CheckBoxesScriptsPartial");
+    }
+}

@@ -1,0 +1,46 @@
+﻿
+@if 
+(
+(await _authorizationService.AuthorizeAsync(User, CustomAuthorizeTags.Permisos + "$" + string.Join("|", Permisos.Pages.All, Permisos.UsuariosPage.All, Permisos.UsuariosPage.Create, Permisos.UsuariosPage.Read, Permisos.UsuariosPage.Update, Permisos.UsuariosPage.Delete) + ";")).Succeeded
+)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Usuarios/Index">Usuarios</a>
+    </li>
+}
+
+@if
+(
+(await _authorizationService.AuthorizeAsync(User, CustomAuthorizeTags.Permisos + "$" + string.Join("|", Permisos.Pages.All, Permisos.RolesPage.All, Permisos.RolesPage.Create, Permisos.RolesPage.Read, Permisos.RolesPage.Update, Permisos.RolesPage.Delete) + ";")).Succeeded
+)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Roles/Index">Roles</a>
+    </li>
+}
+
+
+@if
+(
+(await _authorizationService.AuthorizeAsync(User, CustomAuthorizeTags.Permisos + "$" + string.Join("|", Permisos.Pages.All, Permisos.PermisosPage.All, Permisos.PermisosPage.Create, Permisos.PermisosPage.Read, Permisos.PermisosPage.Update, Permisos.PermisosPage.Delete) + ";")).Succeeded
+)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Permisos/Index">Permisos</a>
+    </li>
+}
+
+
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+    </li>
+
+
+
+
+
+
+
+
+

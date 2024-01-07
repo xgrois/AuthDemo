@@ -1,0 +1,11 @@
+﻿<h3>@Message</h3>
+
+<button @onclick="MyFunc">Click Me!</button>
+
+@code {
+    public string? Message { get; set; }
+    private void MyFunc()
+    {
+        Message = "Hello Blazor in Razor";
+    }
+}
